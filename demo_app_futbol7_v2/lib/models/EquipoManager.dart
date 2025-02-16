@@ -2,22 +2,22 @@
 
 import 'dart:math';
 import 'package:flutter/foundation.dart'; // Importante para ChangeNotifier
-import 'Jugador.dart';
+import 'package:demo_app_futbol7_v2/models/JugadorPs.dart';
 
 class EquipoManager with ChangeNotifier {
-  List<Jugador> jugadores;
-  List<Jugador> equipoClaros = [];
-  List<Jugador> equipoOscuros = [];
+  List<JugadorPs> jugadores;
+  List<JugadorPs> equipoClaros = [];
+  List<JugadorPs> equipoOscuros = [];
   bool seleccionEquipoClaros = true; // Iniciamos seleccionando equipo claros
   bool seleccionFinalizada = false;
 
   EquipoManager({required this.jugadores});
 
-  List<Jugador> get jugadoresSeleccionados {
+  List<JugadorPs> get jugadoresSeleccionados {
     return seleccionEquipoClaros ? equipoClaros : equipoOscuros;
   }
 
-  void seleccionarJugador(Jugador jugador) {
+  void seleccionarJugador(JugadorPs jugador) {
     if (jugador.seleccionado) {
       // Deseleccionar jugador
       if (seleccionEquipoClaros) {
@@ -56,14 +56,14 @@ class EquipoManager with ChangeNotifier {
     equipoClaros.clear();
     equipoOscuros.clear();
 
-    List<Jugador> availablePlayers = List.from(jugadores);
+    List<JugadorPs> availablePlayers = List.from(jugadores);
 
     Random random = Random();
 
     // Seleccionar 7 jugadores aleatorios para el equipo claro
     for (int i = 0; i < 7 && availablePlayers.isNotEmpty; i++) {
       int index = random.nextInt(availablePlayers.length);
-      Jugador selectedPlayer = availablePlayers.removeAt(index);
+      JugadorPs selectedPlayer = availablePlayers.removeAt(index);
       selectedPlayer.seleccionado = true;
       equipoClaros.add(selectedPlayer);
     }
@@ -72,7 +72,7 @@ class EquipoManager with ChangeNotifier {
     if (availablePlayers.length >= 7) {
       for (int i = 0; i < 7 && availablePlayers.isNotEmpty; i++) {
         int index = random.nextInt(availablePlayers.length);
-        Jugador selectedPlayer = availablePlayers.removeAt(index);
+        JugadorPs selectedPlayer = availablePlayers.removeAt(index);
         selectedPlayer.seleccionado = true;
         equipoOscuros.add(selectedPlayer);
       }
@@ -85,8 +85,12 @@ class EquipoManager with ChangeNotifier {
   }
 
   void borrarDatos() {
-    equipoClaros.forEach((jugador) => jugador.seleccionado = false);
-    equipoOscuros.forEach((jugador) => jugador.seleccionado = false);
+    for (var jugador in equipoClaros) {
+      jugador.seleccionado = false;
+    }
+    for (var jugador in equipoOscuros) {
+      jugador.seleccionado = false;
+    }
     equipoClaros.clear();
     equipoOscuros.clear();
     seleccionEquipoClaros = true;

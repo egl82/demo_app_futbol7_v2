@@ -1,20 +1,21 @@
 // widgets/equipoWidget.dart
 
+import 'package:demo_app_futbol7_v2/models/JugadorPs.dart';
 import 'package:flutter/material.dart';
-import 'package:demo_app_futbol7_v2/models/Jugador.dart';
+
 
 
 class EquipoWidget extends StatelessWidget {
-  final List<Jugador> equipo;
+  final List<JugadorPs> equipo;
   final Color color;
   final String title;
 
   const EquipoWidget({
-    Key? key,
+    super.key,
     required this.equipo,
     required this.color,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class EquipoWidget extends StatelessWidget {
                   style: const TextStyle(color: Colors.white),
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
