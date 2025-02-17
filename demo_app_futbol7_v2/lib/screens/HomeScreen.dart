@@ -1,8 +1,11 @@
 import 'package:demo_app_futbol7_v2/screens/JugadorSelectionScreen.dart';
+import 'package:demo_app_futbol7_v2/widgets/ClasificacionCard.dart';
+import 'package:demo_app_futbol7_v2/widgets/ResultadoPartidoWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app_futbol7_v2/models/JugadorPs.dart';
 import 'package:demo_app_futbol7_v2/models/EquipoManager.dart';
 import 'package:demo_app_futbol7_v2/widgets/QuinielaCard.dart'; // Importamos el nuevo widget
+import 'package:demo_app_futbol7_v2/models/Usuario.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -35,10 +38,25 @@ class _HomeScreenState extends State<HomeScreen> {
     'Fer',
     'Pablo Silvage',
     'Tri',
+    'Facu',
   ];
+
+    // Lista de usuarios con puntos iniciales
+  final List<Usuario> usuarios = [
+    Usuario(id: "1", nombre: "Alex", puntos: 50),
+    Usuario(id: "2", nombre: "Antonio", puntos: 30),
+    Usuario(id: "3", nombre: "Emmanuel", puntos: 70),
+    Usuario(id: "4", nombre: "Joaquín", puntos: 40),
+    Usuario(id: "5", nombre: "Iker", puntos: 60),
+  ];
+
 
   // Variable para almacenar la selección quinielística
   String? seleccionQuiniela; // Puede ser "1", "X" o "2"
+  
+  // Variables para almacenar el resultado del partido
+  String golesEquipoClaro = "";
+  String golesEquipoOscuro = "";
 
   @override
   void initState() {
@@ -53,8 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fútbol 7 App'),
-        backgroundColor: Colors.transparent, // AppBar transparente
+        title: const Text('Fútbol 7 App',style: TextStyle(fontWeight: FontWeight.bold,)),
+        backgroundColor: Colors.green, // AppBar transparente
         elevation: 0, // Sin sombra
       ),
       body: Container(
@@ -150,6 +168,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   const SizedBox(height: 16),
 
+                  // WIDGET PARA INTRODUCIR RESULTADO DEL PARTIDO
+                  ResultadoPartidoWidget(
+                    onResultadoChanged: (claros, oscuros) {
+                      setState(() {
+                        golesEquipoClaro = claros;
+                        golesEquipoOscuro = oscuros;
+                      });
+                    },
+                  ),
+
                   // BOTÓN PARA ENVIAR/GUARDAR
                   ElevatedButton(
                     onPressed: equipoManager.seleccionFinalizada
@@ -162,6 +190,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         : null,
                     child: const Text('Enviar/Guardar'),
                   ),
+                  const SizedBox(height: 16),
+
+                  // CLASIFICACIÓN DE USUARIOS
+                  ClasificacionCard(usuarios: usuarios), // Añadimos el nuevo widget aquí
                 ],
               ),
             ),
