@@ -1,7 +1,7 @@
 class Usuario {
   final String id;
   final String nombre;
-  int puntos;
+  double puntos;
 
   Usuario({
     required this.id,

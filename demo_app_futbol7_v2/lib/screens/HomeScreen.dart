@@ -8,6 +8,16 @@ import 'package:demo_app_futbol7_v2/widgets/QuinielaCard.dart'; // Importamos el
 import 'package:demo_app_futbol7_v2/models/Usuario.dart';
 
 class HomeScreen extends StatefulWidget {
+
+ final String nombreUsuario;
+
+
+  const HomeScreen({
+    Key? key,
+    required this.nombreUsuario,
+  }) : super(key: key);
+
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -47,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
     Usuario(id: "2", nombre: "Antonio", puntos: 30),
     Usuario(id: "3", nombre: "Emmanuel", puntos: 70),
     Usuario(id: "4", nombre: "Joaquín", puntos: 40),
-    Usuario(id: "5", nombre: "Iker", puntos: 60),
+    Usuario(id: "5", nombre: "Iker", puntos: 25),
+    Usuario(id: "5", nombre: "Rober", puntos: 85.5),
   ];
 
 
@@ -71,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fútbol 7 App',style: TextStyle(fontWeight: FontWeight.bold,)),
+        title: Text('Fútbol 7 App - ${widget.nombreUsuario}',style: TextStyle(fontWeight: FontWeight.bold,)),
         backgroundColor: Colors.green, // AppBar transparente
         elevation: 0, // Sin sombra
       ),
